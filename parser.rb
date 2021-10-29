@@ -5,14 +5,25 @@ require_relative 'block'
 class Parser
   #
   def initialize
+    @head = ''
     @body = ''
-    @keywords = { 'body' => @body }
+    @keywords = { 'head' => @head, 'body' => @body }
     @blocks = []
   end
 
   #
   def [](key)
     return @keywords[key]
+  end
+
+  #
+  def []=(key, value)
+    case key
+    when 'redirect'
+      @head << "<meta http-equiv='refresh' content='0;url=#{value}'>"
+    else
+      @keywords[key] = value
+    end
   end
 
   #
@@ -37,7 +48,7 @@ class Parser
   def parse_line(text)
     parse_inline(text)
     if match = /^%(\w+)\s+(.*)$/.match(text)
-      @keywords[match[1]] = match[2]
+      self[match[1]] = match[2]
       return nil
     elsif match = /^(#+)\s*(.*)\s*$/.match(text)
       close_all_block
