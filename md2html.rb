@@ -19,8 +19,13 @@ ARGV.each { |path|
 }
 if template
   html = File.read(template)
-  html.gsub!(/\$(\w+?)\$/) {
-    parser[$1]
+  html.gsub!(/([ \t]*)\$(\w+?)\$([ \t]*)(\n?)/) {
+    keyword = parser[$2]
+    if keyword and !keyword.empty?
+      "#{$1}#{keyword}#{$3}#{$4}"
+    else
+      ""
+    end
   }
   if output
     File.open(output, 'w') { |fd|
