@@ -71,8 +71,10 @@ class Parser
 
   #
   def parse_inline(text)
-    text.gsub!(/!\[([^\s\\]+?)\]/) { |match|
-      "<img src='#{$1}'/>"
+    text.gsub!(/!\[([^\s\\]+?)\]/) {
+      src = $1
+      id = File.basename(src, '.*')
+      "<img src='#{src}' id='#{id}'/>"
     }
     text.gsub!(/\[([^\s\\]+?)\](\((.*?)\))?/) { |match|
       "<a href='#{$1}'>#{$3 || $1}</a>"
