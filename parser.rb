@@ -57,6 +57,11 @@ class Parser
     elsif match = /^(\s*)\*\s*(.*)\s*$/.match(text)
       open_block(Block.new(match[1].length, 'ul'))
       return "<li>#{match[2]}</li>"
+    elsif match = /^(\s*)(\|.*\|)(h?)\s*$/.match(text)
+      open_block(Block.new(match[1].length, 'table'))
+      tag = match[3].empty? ? 'td' : 'th'
+      tr = match[2].scan(/\|(.*?)(?=\|)/).map { |m| "<#{tag}>#{m[0]}</#{tag}>" }.join
+      return "<tr>#{tr}</tr>"
     else
       text.strip!
       if text.empty?
