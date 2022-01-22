@@ -36,7 +36,8 @@ class Parser
       else
         if html = parse_line(text)
           html.gsub!(/\\(.)/) { $1 }
-          @body << html << "\n"
+          # @body << html << "\n"
+          @body << html
         end
         text = ''
       end
@@ -62,14 +63,14 @@ class Parser
       tag = match[3].empty? ? 'td' : 'th'
       tr = match[2].scan(/\|(.*?)(?=\|)/).map { |m| "<#{tag}>#{m[0]}</#{tag}>" }.join
       return "<tr>#{tr}</tr>"
-    else
-      text.strip!
-      if text.empty?
+    elsif match = /^(\s*)(.*?)(\s*)$/.match(text)
+      if match[2].empty?
         close_all_block
         return nil
       else
-        open_block(Block.new(0, "p"))
-        return text + "<br/>"
+        indent = match[1].length
+        open_block(Block.new(indent, indent > 0 ? 'pre' : 'p'))
+        return match[2] + "<br/>"
       end
     end
   end
