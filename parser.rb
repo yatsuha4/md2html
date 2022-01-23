@@ -85,6 +85,9 @@ class Parser
     text.gsub!(/\[([^\s\\]+?)\](\((.*?)\))?/) { |match|
       "<a href='#{$1}'>#{$3 || $1}</a>"
     }
+    text.gsub!(/\*\*(.*?)\*\*/) {
+      "<strong>#{$1}</strong>"
+    }
   end
 
   #

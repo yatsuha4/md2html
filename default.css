@@ -2,16 +2,18 @@ body {
     font-family: sans-serif;
     color: black;
     background-color: white;
+    padding: 0em 0.5em;
 }
 h1 {
-    border: solid black;
-    border-width: 0px 0px 1px 1em;
+    color: white;
+    background-color: black;
     margin: 0.5em 0em;
-    padding: 0.1em 0.5em;
+    padding: 0.1em 1em;
+    text-align: center;
 }
 h2 {
     border: solid black;
-    border-width: 0px 0px 1px 0.5em;
+    border-width: 0px 0px 1px 1em;
     margin: 0.5em 0em;
     padding: 0.1em 0.5em;
 }
@@ -22,4 +24,10 @@ h3 {
 p {
     margin: 0.5em 0em;
     padding: 0em;
+}
+pre {
+    background-color: #eee;
+    padding: 1em;
+    margin: 0.5em 0em;
+    border-radius: 0.5em;
 }
